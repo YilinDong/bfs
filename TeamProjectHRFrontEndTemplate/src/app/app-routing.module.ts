@@ -4,14 +4,13 @@ import { BrowserModule } from "@angular/platform-browser";
 import { Routes, RouterModule } from "@angular/router";
 
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
+import {HRComponentComponent} from "./pages/hrcomponent/hrcomponent.component";
 
 const routes: Routes = [
-  {
-     path: "onboarding",
-     redirectTo: "hrcomponent",
-     pathMatch: "full"
-   },
-  {
+    {
+    path: "onboarding", component: HRComponentComponent
+    },
+    {
     path: "",
     component: AdminLayoutComponent,
     children: [

@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { ToastrModule } from 'ngx-toastr';
@@ -14,6 +14,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
 import { UserkindService } from "./service/userkind.service";
 import { OnboardingFormServiceService } from "./service/onboarding-form-service.service";
+import { HRComponentComponent } from "./pages/hrcomponent/hrcomponent.component";
 
 @NgModule({
   imports: [
@@ -24,9 +25,10 @@ import { OnboardingFormServiceService } from "./service/onboarding-form-service.
     NgbModule,
     RouterModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot()
   ],
-  declarations: [AppComponent, AdminLayoutComponent],
+  declarations: [AppComponent, AdminLayoutComponent, HRComponentComponent,],
   providers: [UserkindService,OnboardingFormServiceService],
   bootstrap: [AppComponent]
 })
