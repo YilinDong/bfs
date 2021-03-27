@@ -1,6 +1,7 @@
 package com.hr.hrserver.dao;
 
 import com.hr.hrserver.pojo.*;
+import com.hr.hrserver.service.HousingAndFacilityReportService;
 import com.hr.hrserver.util.UtilFunction;
 
 import java.text.ParseException;
@@ -69,6 +70,7 @@ public class selfTest {
 //        Employee e = new Employee();
 //        e.setUserID(10);
 //        EmployeeDaoImpl edl = new EmployeeDaoImpl();
+
 //        System.out.println(edl.save(e));
 
 //        Employee employee = new Employee();
@@ -83,10 +85,20 @@ public class selfTest {
 //        System.out.println(employeeDaoImpl.testDao());
 
         //find a house with Number of People < 4 and and one person to that house
-        HouseDaoImpl hdi = new HouseDaoImpl();
+//        HouseDaoImpl hdi = new HouseDaoImpl();
+//
+//        int houseId = hdi.getHouseIDWhichNumOfPeopLessThan(4);
+//
+//        System.out.println(hdi.increaseNumOfPeopleByHouseID(houseId));
 
-        int houseId = hdi.getHouseIDWhichNumOfPeopLessThan(4);
+        HousingAndFacilityReportService hFRS = new HousingAndFacilityReportService();
+        System.out.println(hFRS.getHouseDetailByEmployeeID(1).address.getAddressLine1());
+        System.out.println(hFRS.getHouseDetailByEmployeeID(1).address.getAddressLine2());
+        for(Occupant o: hFRS.getHouseDetailByEmployeeID(1).occupantList)
+            System.out.println(o.name + "/////" + o.phoneNumber);
 
-        System.out.println(hdi.increaseNumOfPeopleByHouseID(houseId));
+//        EmployeeDaoImpl employeeDaoImpl = new EmployeeDaoImpl();
+//        System.out.println(employeeDaoImpl.getSomeInfoByHouseID(1).CellPhone);
+
     }
 }

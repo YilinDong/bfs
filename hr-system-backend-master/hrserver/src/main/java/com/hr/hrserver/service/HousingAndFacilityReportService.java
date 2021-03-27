@@ -1,20 +1,26 @@
 package com.hr.hrserver.service;
 
-import com.hr.hrserver.dao.FacilityReportDaoImpl;
-import com.hr.hrserver.dao.FacilityReportDetailDaoImpl;
-import com.hr.hrserver.dao.HouseDaoImpl;
-import com.hr.hrserver.pojo.FacilityReport;
-import com.hr.hrserver.pojo.FacilityReportDetail;
+import com.hr.hrserver.dao.*;
+import com.hr.hrserver.pojo.*;
 import com.hr.hrserver.util.UtilFunction;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 class FacilityReportForm{
     int employeeID;
     String title;
     String description;
 }
+@Getter
+@Setter
+@NoArgsConstructor
 class FacilityReportDetailForm{
     int reportID;
     int employeeID;
@@ -58,6 +64,42 @@ public class HousingAndFacilityReportService {
 
         FacilityReportDetailDaoImpl fRDDI = new FacilityReportDetailDaoImpl();
         return (int) fRDDI.save(fRDObject);
+    }
+
+    public HouseDetail getHouseDetailByEmployeeID(int eID){
+        HouseDetail houseDetail = new HouseDetail();
+
+        //get HouseID from table Employee using eID
+        EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
+        Employee employee = (Employee) employeeDao.get(eID);
+        int houseID = employee.getHouseID();
+
+        //get Address column (which refers to Address.ID) from House using House.ID
+        //And set Address Object to houseDetail
+        HouseDaoImpl houseDao = new HouseDaoImpl();
+        House house = houseDao.getHouseByID(houseID);
+        AddressDaoImpl addressDao = new AddressDaoImpl();
+        //assign to houseDetail
+        houseDetail.address=
+                (Address) addressDao.get(
+                        house.getAddressID()
+                );
+
+        //in Employee table find all column with this same HouseID,
+        // retrieve their FirstName,PreferredName, cellPhone as a list
+        List<OccupantRaw> returnList = employeeDao.getSomeInfoByHouseID(1);
+        System.out.println(returnList.get(0).getClass());
+        List<Occupant> oList = new ArrayList<>();
+        for(OccupantRaw o : returnList){
+            Occupant newOccu = new Occupant();
+            newOccu.name = o.PreferredName==""? o.FirstName : o.PreferredName;
+            newOccu.phoneNumber = o.CellPhone;
+            oList.add(newOccu);
+        }
+        //assign to houseDetail
+        houseDetail.occupantList=oList;
+
+        return houseDetail;
     }
 
 }

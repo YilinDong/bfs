@@ -55,4 +55,5 @@ public class HouseDaoImpl extends BaseDaoImpl implements HouseDao{
         employee.setHouseID(houseId);
         return houseId;
     }
+
 }
