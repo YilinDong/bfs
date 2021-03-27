@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class OnboardingFormServiceService {
 
-  url : string;
+  url : string = 'api/saveuser';
 
   constructor(private http : HttpClient) { }
 
-  submitForm(data): Observable<OnboardingForm>{
-    return this.http.post<OnboardingForm>(this.url, data);
+  submitForm(data): Observable<any>{
+    return this.http.get(this.url);
   }
 }
