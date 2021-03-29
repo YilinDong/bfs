@@ -2,6 +2,7 @@ package com.hr.hrserver.service;
 
 import com.hr.hrserver.dao.*;
 import com.hr.hrserver.model.FacilityReportAndUsername;
+import com.hr.hrserver.model.FacilityReportDetailAndUsername;
 import com.hr.hrserver.pojo.*;
 import com.hr.hrserver.util.UtilFunction;
 
@@ -45,7 +46,7 @@ public class HousingAndFacilityReportService {
         facilityReport.setEmployeeID(eID);
         facilityReport.setReportDate(UtilFunction.getTodayDate());
         facilityReport.setDescription((String) fRInput.get("description"));
-        facilityReport.setStatus("Open");
+        facilityReport.setStatus("open");
 
         FacilityReportDaoImpl fRDI = new FacilityReportDaoImpl();
         int reportID = (int) fRDI.save(facilityReport);
@@ -132,6 +133,7 @@ public class HousingAndFacilityReportService {
         FacilityReportDaoImpl facilityReportDao = new FacilityReportDaoImpl();
         List<FacilityReport> facilityReports = facilityReportDao.getFacilityReportByListOfEmployeeID(integers);
 
+        FacilityReportDetailDaoImpl frdd = new FacilityReportDetailDaoImpl();
         List<FacilityReportAndUsername> output = new ArrayList<>();
         for(FacilityReport f : facilityReports){
             int uid = employeeDao.getUserIDByEmployeeID(f.getEmployeeID());
@@ -139,6 +141,20 @@ public class HousingAndFacilityReportService {
             FacilityReportAndUsername fa = new FacilityReportAndUsername();
             fa.setFacilityReport(f);
             fa.setUsername(un);
+            //get facility report detail
+            List<FacilityReportDetail> detailList = frdd.getFacilityReportDetailByFacilityReportID(f.getID());
+            List<FacilityReportDetailAndUsername> detailAndUsernames = new ArrayList<>();
+            for (FacilityReportDetail detail : detailList){
+                FacilityReportDetailAndUsername fu = new FacilityReportDetailAndUsername();
+                fu.setFacilityReportDetail(detail);
+                fu.setUsername(
+                        ((User)userDao.get(
+                                employeeDao.getUserIDByEmployeeID(f.getEmployeeID())
+                        )).getUsername()
+                );
+                detailAndUsernames.add(fu);
+            }
+            fa.setDetails(detailAndUsernames);
             output.add(fa);
         }
         return output;
@@ -148,6 +164,37 @@ public class HousingAndFacilityReportService {
         FacilityReportDetailDaoImpl frddi = new FacilityReportDetailDaoImpl();
         return
                 frddi.getFacilityReportDetailByFacilityReportID(frID);
+    }
+
+    public String saveOrUpdateComment(int reportDetailID, String newComment){
+        FacilityReportDetailDaoImpl FRDDI = new FacilityReportDetailDaoImpl();
+        if (FRDDI.get(reportDetailID) == null)
+            return "reportDetailID doesn't exist";
+        FacilityReportDetail targetDetail =
+                (FacilityReportDetail) FRDDI.get(reportDetailID);
+        targetDetail.setComment(newComment);
+        targetDetail.setLastModificationDate(UtilFunction.getTodayDate());
+        FRDDI.saveOrupdate(targetDetail);
+        return "Edited Successfully";
+    }
+
+    public String saveOrUpdateReport(int reportID, String newDescription, boolean changeStatus){
+        FacilityReportDaoImpl FRDI = new FacilityReportDaoImpl();
+        if (FRDI.get(reportID)==null)
+            return "reportID doesn't exist";
+        FacilityReport report = (FacilityReport) FRDI.get(reportID);
+        System.out.println(report.toString());
+        if (!newDescription.equals(""))
+            report.setDescription(newDescription);
+        if (changeStatus){
+            if (report.getStatus().equals("close"))
+                report.setStatus("open");
+            else if (report.getStatus().equals("open"))
+                report.setStatus("close");
+        }
+        FRDI.saveOrupdate(report);
+        System.out.println(report.toString());
+        return "Edited Successfully";
     }
 
 }

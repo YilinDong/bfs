@@ -304,9 +304,17 @@ import java.util.*;
 public class selfTest {
     public static void main(String[] args) {
         HousingController hc = new HousingController();
+//        System.out.println(
+//                hc.addCommentToReport(3,"Dany","It broke again")
+//        );
+//        System.out.println(
+//                hc.addReport("Dany","electricity out", "power issue")
+//        );
+//        System.out.println(
+//                hc.editComment(4,"Raining indoor")
+//        );
         System.out.println(
-                hc.fetchFacilityReportByUserName("Dany")
+                hc.editReport(4,"issue solved", true)
         );
-
     }
 }
