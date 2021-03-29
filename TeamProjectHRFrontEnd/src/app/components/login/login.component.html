@@ -10,5 +10,6 @@
 <button *ngIf="(userIdentity!=='notLogin')" (click)="logOut()">Logout</button>
 
 <app-normal-user *ngIf="(userIdentity=='normal')"></app-normal-user>
+<app-file-upload>test upload</app-file-upload>
 
 <app-hr *ngIf="(userIdentity=='hr')"></app-hr>

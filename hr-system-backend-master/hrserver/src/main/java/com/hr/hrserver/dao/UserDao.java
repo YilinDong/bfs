@@ -18,6 +18,4 @@ import java.util.Optional;
 public interface UserDao  {
     public User findUserbyUsernameAndPassword(String username, String password);
 
-
-
 }

@@ -2,10 +2,7 @@ package com.hr.hrserver.pojo;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -13,6 +10,8 @@ import java.util.Date;
 @Table(name="Employee")
 public class Employee {
     @Id
+    @GeneratedValue
+    @Column(name="ID")
     int ID;
     @Column(name="UserID")
     int UserID;

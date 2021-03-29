@@ -11,7 +11,7 @@ import java.util.List;
 
 public class FacilityReportDaoImpl extends BaseDaoImpl implements FacilityReportDao{
     public FacilityReportDaoImpl() {
-        super(Facility.class);
+        super(FacilityReport.class);
     }
 
     @Override
@@ -39,4 +39,14 @@ public class FacilityReportDaoImpl extends BaseDaoImpl implements FacilityReport
         Date reportDate = ((FacilityReport) this.get(fReportId)).getReportDate();
         return reportDate;
     }
+
+    public List<FacilityReport> getFacilityReportByListOfEmployeeID(List<Integer> eIDList){
+        Query query = getCurrentSession().createQuery("from FacilityReport f where f.EmployeeID in :eIDList");
+        query.setParameter("eIDList", eIDList);
+        if(CollectionUtils.isEmpty(query.list())) {
+            return null;
+        }
+        return query.list();
+    }
 }
+

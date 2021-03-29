@@ -24,7 +24,20 @@ public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao{
             return null;
         }
         Employee e = (Employee)query.list().get(0);
+        tx.commit();
         return  e ;
+    }
+
+    public int getHouseIdByEmployeeId(int eid){
+        Query query = getCurrentSession().createQuery("from Employee e where e.ID=:eid");
+        Transaction tx = getCurrentSession().beginTransaction();
+        query.setParameter("eid", eid);
+        if(CollectionUtils.isEmpty(query.list())) {
+            return -1;
+        }
+        Employee e = (Employee)query.list().get(0);
+        tx.commit();
+        return  e.getHouseID();
     }
 
     public Employee getEmployeeByUserEmail(String email) {
@@ -35,7 +48,24 @@ public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao{
             return null;
         }
         Employee e = (Employee)query.list().get(0);
+        tx.commit();
         return  e ;
+    }
+
+    public List<Integer> getAllEmployeeInAHouseId(int hid){
+        //following code works, yet it returns all fields of employee instead of list of eid
+//        Query query = getCurrentSession().createQuery("from Employee e where e.HouseID=:hid");
+//        query.setParameter("hid", hid);
+//        if(CollectionUtils.isEmpty(query.list())) {
+//            return null;
+//        }
+//        return  query.list();
+        String qry = "Select ID from Employee Where HouseID="+hid;
+        Query query = getCurrentSession().createSQLQuery(qry);
+        if(CollectionUtils.isEmpty(query.list())) {
+            return null;
+        }
+        return query.list();
     }
 
     //Given a HouseID retrieve employee's FirstName, PreferredName, and cellPhone as a list
@@ -55,6 +85,16 @@ public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao{
             result.add(oR);
         }
         return result;
+    }
+
+    public int getUserIDByEmployeeID(int eid){
+        Query query = getCurrentSession().createQuery("from Employee e where e.ID=:eid");
+        query.setParameter("eid", eid);
+        if(CollectionUtils.isEmpty(query.list())) {
+            return -1;
+        }
+        Employee e = (Employee)query.list().get(0);
+        return  e.getUserID();
     }
 
     public List<Employee> testDao(){

@@ -19,6 +19,7 @@ public class FacilityDaoImpl extends BaseDaoImpl implements FacilityDao{
         if(CollectionUtils.isEmpty(query.list())) {
             return null;
         }
+        tx.commit();
         return (Facility) query.list().get(0);
     }
 }

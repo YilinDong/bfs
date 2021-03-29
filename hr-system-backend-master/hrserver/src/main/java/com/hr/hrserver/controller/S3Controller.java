@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import com.hr.hrserver.service.S3Service;
+import com.hr.hrserver.service.S3ServiceB;
 import org.springframework.http.ResponseEntity;
 
 public class S3Controller {
@@ -23,5 +24,8 @@ public class S3Controller {
         String key = file.getName();
         s3Service.putToS3(uid, file, key);
     }
+
+    S3ServiceB s3ServiceB = new S3ServiceB();
+
 
 }

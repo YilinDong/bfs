@@ -2,10 +2,7 @@ package com.hr.hrserver.pojo;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -16,6 +13,7 @@ import javax.persistence.Table;
 @Table(name="Contact")
 public class Contact {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
     int ID;
     @Column(name="EmployeeID")
@@ -31,5 +29,14 @@ public class Contact {
     @Column(name="isLandlord")
     int isLandlord;
     @Column(name="cellPhone")
-    String cellPhone;
+    String Phone;
+    @Column(name="Name")
+    String Name;
+    @Column(name="Email")
+    String Email;
+
+//    @ManyToOne
+//    @JoinColumn(name = "EmployeeID")
+//    Employee e;
 }
+

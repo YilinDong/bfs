@@ -1,3 +1,14 @@
-<!-- <app-form-ex></app-form-ex> -->
-<hr>
-<app-hrcomponent></app-hrcomponent>
+<h1>Our Angular Application</h1>
+<nav>
+  <ul>
+    <li><a *ngIf="auth.isLoggedin()" routerLink="/dashboard">DASHBOARD</a></li>
+    <li><a *ngIf="!auth.isLoggedin()" routerLink="/login" >LOGIN</a></li>
+    <li><a *ngIf="auth.isLoggedin()" routerLink="/personalinfo">PERSONAL INFO</a></li>
+    <li><a *ngIf="auth.isLoggedin()" routerLink="/visa">VISA MANAGEMENT</a></li>
+    <li><a *ngIf="auth.isLoggedin()" routerLink="/housing">HOUSING</a></li>
+    <li><a *ngIf="auth.isLoggedin()" routerLink="/onboardingform">ONBOARDINGFORM</a></li>
+  </ul>
+  <a *ngIf="auth.isLoggedin()" routerLink="/logout">LOGOUT</a>
+  </nav>
+<router-outlet></router-outlet>
+<!-- <app-hrcomponent></app-hrcomponent> -->

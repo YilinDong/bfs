@@ -1,4 +1,8 @@
 <p>hrcomponent works!</p>
+    <!-- Fonts and icons    
+<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"> -->
+
 <form [formGroup] = "onboardingForm" (ngSubmit)="onSubmit(onboardingForm)">
     <label for="firstName">First Name(*):</label><br>
     <input type="text" name="firstName" formControlName="firstName" required> <br><br>
@@ -13,8 +17,6 @@
     <label for="preferredName">Preferred Name:</label><br>
     <input type="text" name="preferredName" formControlName="preferredName"><br><br>
 
-    <label for="avatar">Avatar:</label><br>
-    <input type="file" name="avatar" formControlName="avatar"><br><br>
 
     <label for="address">Address(*):</label><br>
     <input type="text" name="address" formControlName="address"><br><br>
@@ -37,7 +39,7 @@
     <input type="text" name="carColor" formControlName="carColor"><br><br>
 
     <label for="email">Email:</label><br>
-    <input type="email" name="email" value="PREFILLED@gmail.com" formControlName="email" disabled><br><br>
+    <input type="email" name="email" value= {{email}}  disabled><br><br>
 
     <label for="SSN">SSN(*):</label><br>
     <input type="tel" name="SSN" placeholder="123-45-7890" pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}" formControlName="SSN"
@@ -54,8 +56,8 @@
     </select>
     <br><br>
 
-    <label for="citizenship" required>Are you a citizen or permanent resident of the U.S?(*):<br>
-    <input type="radio" formControlName="isCitizenOrPerm" name="isCitizenOrPerm" value="true">Yes<br>
+    <label for="isCitizenOrPerm">Are you a citizen or permanent resident of the U.S?(*):<br>
+    <input type="radio" formControlName="isCitizenOrPerm" name="isCitizenOrPerm" value="true" required>Yes<br>
     <input type="radio" formControlName="isCitizenOrPerm" name="isCitizenOrPerm" value="false">No<br>
 </label>
 
@@ -81,16 +83,16 @@
     <input type="date" name="workAuthOtherEnd" formControlName="workAuthOtherEnd" required><br><br>
 </label>
 
-<div>work authorization : {{onboardingForm.controls["SSN"].value}}</div>
+<!-- <div>work authorization : {{onboardingForm.controls["SSN"].value}}</div> -->
 
     <label *ngIf="onboardingForm.controls['workAuth'].value ==='Other'">What is your work authorization? Please specify<br>
     <input type="text" name="workAuthOther" formControlName="workAuthOther"><br><br>
     </label>
 
 
-    <label for="workAuthFile">Copy of your work authorization:</label><br>
+    <label for="workAuthFile" *ngIf="onboardingForm.controls['isCitizenOrPerm'].value ==='false'" >Copy of your work authorization:<br>
     <input type="file" name="workAuthFile" formControlName="workAuthFile"><br><br>
-
+</label>
 
     <label for="hasDriverLicense">Do you have a driver license?</label><br>
     <input type="radio" formControlName="hasDriverLicense" name="hasDriverLicense" value="true">Yes<br>
@@ -133,12 +135,59 @@
 <div formArrayName="emergencyContacts">
 <h3>Emergency Contacts</h3>
 <button (click)="addEmergencyContact()">Add Emergency Contact</button>
-    <div *ngFor="let emergencyContact of onboardingForm.controls['emergencyContacts']; let i = index">
-        <label>
-            
-        </label>
+
+<!-- <div> ec: {{onboardingForm.controls['emergencyContacts'].value}}</div> -->
+
+    <div *ngFor="let emergencyContact of emergencyContacts.controls; let i = index">
+        <div [formGroupName]="i">
+            <div>First Name</div>
+            <input type = "text" formControlName="emergencyContactFirstName">
+            <div>Last Name</div>
+            <input type = "text" formControlName="emergencyContactLastName">
+            <div>Middle Name</div>
+            <input type = "text" formControlName="emergencyContactMiddleName">
+            <div>Phone</div>
+            <input type = "text" formControlName="emergencyContactPhone">
+            <div>Email</div>
+            <input type = "text" formControlName="emergencyContactEmail">
+            <div>Relationship</div>
+            <input type = "text" formControlName="emergencyContactRelationship">
+            <button (click)="removeEmergencyContacts(i)">Delete</button>
+        </div>
     </div>
 </div>
 
+<!-- <button type="submit"[disabled]="!onboardingForm.valid">Submit</button> -->
 <button type="submit">Submit</button>
+</form>
+<br>
+
+<form [formGroup]="myForm" (ngSubmit)="submit()">
+  
+    <div class="form-group">
+        <label for="name">Name</label><br>
+        <input 
+            formControlName="name"
+            id="name" 
+            type="text" 
+            class="form-control" >
+        <!-- <div *ngIf="f.name.touched && f.name.invalid" class="alert alert-danger">
+            <div *ngIf="f.name.errors.required">Name is required.</div>
+            <div *ngIf="f.name.errors.minlength">Name should be 3 character.</div>
+        </div> -->
+    </div>
+      
+    <div class="form-group">
+        <label for="file">File</label><br>
+        <input 
+            formControlName="file"
+            id="file" 
+            type="file" 
+            class="form-control"
+            (change)="onFileChange($event)">
+        <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+            <div *ngIf="f.file.errors.required">File is required.</div>
+        </div>
+    </div> 
+    <button class="btn btn-primary" type="submit">Submit File</button>
 </form>

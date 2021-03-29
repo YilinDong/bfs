@@ -14,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @Entity
+@ToString
 
 @Table(name = "FacilityReport")
 public class FacilityReport {

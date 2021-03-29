@@ -26,6 +26,44 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao{
             return null;
         }
         User u = (User)query.list().get(0);
+        tx.commit();
         return  u ;
     }
+    public int findIdbyNmae(String username) {
+        Query query = getCurrentSession().createQuery("from User u where u.username=:uname ");
+//        Transaction tx = getCurrentSession().beginTransaction();
+        query.setParameter("uname", username);
+
+        if(CollectionUtils.isEmpty(query.list())) {
+            return -1;
+        }
+        User u = (User)query.list().get(0);
+//        tx.commit();
+        return  u.getId() ;
+    }
+    public int findIdbyEmail(String email) {
+        Query query = getCurrentSession().createQuery("from User u where u.email=:uname ");
+//        Transaction tx = getCurrentSession().beginTransaction();
+        query.setParameter("uname", email);
+
+        if(CollectionUtils.isEmpty(query.list())) {
+            return -1;
+        }
+        User u = (User)query.list().get(0);
+//        tx.commit();
+        return  u.getId() ;
+    }
+    public String findEmailbyNmae(String username) {
+        Query query = getCurrentSession().createQuery("from User u where u.username=:uname ");
+//        Transaction tx = getCurrentSession().beginTransaction();
+        query.setParameter("uname", username);
+
+        if(CollectionUtils.isEmpty(query.list())) {
+            return null;
+        }
+        User u = (User)query.list().get(0);
+//        tx.commit();
+        return  u.getEmail() ;
+    }
+
 }

@@ -53,6 +53,7 @@ public class HouseDaoImpl extends BaseDaoImpl implements HouseDao{
         EmployeeDaoImpl employeeDao = new EmployeeDaoImpl();
         Employee employee = employeeDao.getEmployeeByUserId(userID);
         employee.setHouseID(houseId);
+        employeeDao.saveOrupdate(employee.getID());
         return houseId;
     }
 

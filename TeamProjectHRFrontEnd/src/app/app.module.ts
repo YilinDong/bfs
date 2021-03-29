@@ -16,6 +16,7 @@ import { HouseManagementComponent } from './components/login/hr/house-management
 import { PersonalVisaStatusComponent } from './components/login/normal-user/personal-visa-status/personal-visa-status.component';
 import { PersonalHousingComponent } from './components/login/normal-user/personal-housing/personal-housing.component';
 import { HRComponentComponent } from './components/hrcomponent/hrcomponent.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HRComponentComponent } from './components/hrcomponent/hrcomponent.compo
     HouseManagementComponent,
     PersonalVisaStatusComponent,
     PersonalHousingComponent,
-    HRComponentComponent
+    HRComponentComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,

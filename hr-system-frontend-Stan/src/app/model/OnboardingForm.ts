@@ -1,10 +1,10 @@
-export class OnboardingForm {
+import { FormArray } from "@angular/forms";
 
+export class OnboardingForm {
     firstName: string;
     lastName: string;
     middleName: string;
     preferredName: string;
-    avatar: File;
     address: string;
     cellPhone: string;
     workPhone: string;
@@ -18,11 +18,11 @@ export class OnboardingForm {
     workAuthOther: string;
     workAuthOtherStart: Date;
     workAuthOtherEnd: Date;
-    workAuthFile: File;
+
     hasDriverLicense: string;
     driverLicenseNumber: string;
     driverLicenseExpirationDate: Date;
-    driverLicenseCopy: File;
+
     referred: string;
     referFirstName: string;
     referLastName: string;
@@ -31,6 +31,8 @@ export class OnboardingForm {
     referAddress: string;
     referEmail: string;
     referRelationship: string;
+    emergencyContacts: FormArray;
+
 
     constructor() {
     }
