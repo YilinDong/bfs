@@ -65,5 +65,4 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao{
 //        tx.commit();
         return  u.getEmail() ;
     }
-
 }

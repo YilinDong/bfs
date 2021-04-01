@@ -1,20 +1,18 @@
 package com.hr.hrserver.pojo;
 
 import lombok.*;
+import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 
-@Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
 @Data
 @Entity
 @Table(name="Contact")
 public class Contact {
-    @Id
+    @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID")
     int ID;
     @Column(name="EmployeeID")
     int EmployeeID;
@@ -28,15 +26,13 @@ public class Contact {
     int isEmergency;
     @Column(name="isLandlord")
     int isLandlord;
-    @Column(name="cellPhone")
-    String Phone;
     @Column(name="Name")
-    String Name;
+    String contactsName;
+    @Column(name="cellPhone")
+    String phone;
     @Column(name="Email")
-    String Email;
-
+    String contactEmail;
 //    @ManyToOne
 //    @JoinColumn(name = "EmployeeID")
 //    Employee e;
 }
-

@@ -2,10 +2,7 @@ package com.hr.hrserver.pojo;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -18,6 +15,7 @@ import java.util.Date;
 
 @Table(name = "FacilityReport")
 public class FacilityReport {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name="ID")
     int ID;

@@ -6,7 +6,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
-public class FacilityReportDetailDaoImpl extends BaseDaoImpl implements FacilityReportDetailDao{
+public class FacilityReportDetailDaoImpl extends BaseDaoImpl {
 
     public FacilityReportDetailDaoImpl() {
         super(FacilityReportDetail.class);

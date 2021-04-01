@@ -2,13 +2,16 @@ package com.hr.hrserver.dao;
 
 import com.hr.hrserver.pojo.Employee;
 import com.hr.hrserver.pojo.OccupantRaw;
+import com.hr.hrserver.pojo.User;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao{
 
     public EmployeeDaoImpl() {
@@ -18,57 +21,16 @@ public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao{
     @Override
     public Employee getEmployeeByUserId(int id) {
         Query query = getCurrentSession().createQuery("from Employee e where e.UserID=:uid");
-        Transaction tx = getCurrentSession().beginTransaction();
+//        Transaction tx = getCurrentSession().beginTransaction();
+
         query.setParameter("uid", id);
         if(CollectionUtils.isEmpty(query.list())) {
             return null;
         }
         Employee e = (Employee)query.list().get(0);
-        tx.commit();
+//        tx.commit();
         return  e ;
     }
-
-    public int getHouseIdByEmployeeId(int eid){
-        Query query = getCurrentSession().createQuery("from Employee e where e.ID=:eid");
-        Transaction tx = getCurrentSession().beginTransaction();
-        query.setParameter("eid", eid);
-        if(CollectionUtils.isEmpty(query.list())) {
-            return -1;
-        }
-        Employee e = (Employee)query.list().get(0);
-        tx.commit();
-        return  e.getHouseID();
-    }
-
-    public Employee getEmployeeByUserEmail(String email) {
-        Query query = getCurrentSession().createQuery("from Employee e where e.Email=:email");
-        Transaction tx = getCurrentSession().beginTransaction();
-        query.setParameter("email", email);
-        if(CollectionUtils.isEmpty(query.list())) {
-            return null;
-        }
-        Employee e = (Employee)query.list().get(0);
-        tx.commit();
-        return  e ;
-    }
-
-    public List<Integer> getAllEmployeeInAHouseId(int hid){
-        //following code works, yet it returns all fields of employee instead of list of eid
-//        Query query = getCurrentSession().createQuery("from Employee e where e.HouseID=:hid");
-//        query.setParameter("hid", hid);
-//        if(CollectionUtils.isEmpty(query.list())) {
-//            return null;
-//        }
-//        return  query.list();
-        String qry = "Select ID from Employee Where HouseID="+hid;
-        Query query = getCurrentSession().createSQLQuery(qry);
-        if(CollectionUtils.isEmpty(query.list())) {
-            return null;
-        }
-        return query.list();
-    }
-
-    //Given a HouseID retrieve employee's FirstName, PreferredName, and cellPhone as a list
     public List<OccupantRaw> getSomeInfoByHouseID(int hID){
         String qry = "Select FirstName, PreferredName, CellPhone from Employee Where HouseID="+hID+"";
         Query query = getCurrentSession().createSQLQuery(qry);
@@ -96,18 +58,57 @@ public class EmployeeDaoImpl extends BaseDaoImpl implements EmployeeDao{
         Employee e = (Employee)query.list().get(0);
         return  e.getUserID();
     }
-
-    public List<Employee> testDao(){
-        String email="admin@gmail.com";
-        Query query = getCurrentSession().createQuery("from Employee e where e.Email=:email");
+    public int getHouseIdByEmployeeId(int eid){
+        Query query = getCurrentSession().createQuery("from Employee e where e.ID=:eid");
         Transaction tx = getCurrentSession().beginTransaction();
-        query.setParameter("email", email);
+        query.setParameter("eid", eid);
+        if(CollectionUtils.isEmpty(query.list())) {
+            return -1;
+        }
+        Employee e = (Employee)query.list().get(0);
+        tx.commit();
+        return  e.getHouseID();
+    }
+
+    public List<Integer> getAllEmployeeInAHouseId(int hid){
+        //following code works, yet it returns all fields of employee instead of list of eid
+//        Query query = getCurrentSession().createQuery("from Employee e where e.HouseID=:hid");
+//        query.setParameter("hid", hid);
 //        if(CollectionUtils.isEmpty(query.list())) {
 //            return null;
 //        }
-        List<Employee> e = query.list();
-        tx.commit();
+//        return  query.list();
+        String qry = "Select ID from Employee Where HouseID="+hid;
+        Query query = getCurrentSession().createSQLQuery(qry);
+        if(CollectionUtils.isEmpty(query.list())) {
+            return null;
+        }
+        return query.list();
+    }
+
+    public List<Employee> getAllEmployee(){
+        Query query = getCurrentSession().createQuery("from Employee");
+        return query.list();
+    }
+
+
+    public Employee getEmployeeByUserName(String uname) {
+        UserDaoImpl ud = new UserDaoImpl();
+        String email = (String)ud.findEmailbyNmae(uname);
+
+        Query query = getCurrentSession().createQuery("from  Employee e  where e.Email=:email");
+//
+        query.setParameter("email", email);
+//
+        Employee e = (Employee) query.list().get(0);
+
+//
         return e;
     }
+
+
+
+
+
 
 }

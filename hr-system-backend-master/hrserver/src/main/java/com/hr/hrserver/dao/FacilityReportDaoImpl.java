@@ -9,12 +9,12 @@ import org.springframework.util.CollectionUtils;
 import java.util.Date;
 import java.util.List;
 
-public class FacilityReportDaoImpl extends BaseDaoImpl implements FacilityReportDao{
+public class FacilityReportDaoImpl extends BaseDaoImpl {
     public FacilityReportDaoImpl() {
         super(FacilityReport.class);
     }
 
-    @Override
+
     public List<FacilityReport> getFacilityReportByEmployeeID(int eid) {
         Query query = getCurrentSession().createQuery("from FacilityReport f where f.EmployeeID=:uid");
         query.setParameter("uid", eid);
@@ -24,7 +24,7 @@ public class FacilityReportDaoImpl extends BaseDaoImpl implements FacilityReport
         return query.list();
     }
 
-    @Override
+
     public List<FacilityReportDetail> getFacilityReportDetailByFacilityReportID(int fReportId) {
         Query query = getCurrentSession().createQuery("from FacilityReportDetail f where f.ReportID=:fReportId");
         query.setParameter("fReportId", fReportId);
@@ -34,12 +34,11 @@ public class FacilityReportDaoImpl extends BaseDaoImpl implements FacilityReport
         return query.list();
     }
 
-    @Override
+
     public Date getReportDateByID(int fReportId) {
         Date reportDate = ((FacilityReport) this.get(fReportId)).getReportDate();
         return reportDate;
     }
-
     public List<FacilityReport> getFacilityReportByListOfEmployeeID(List<Integer> eIDList){
         Query query = getCurrentSession().createQuery("from FacilityReport f where f.EmployeeID in :eIDList");
         query.setParameter("eIDList", eIDList);
@@ -49,4 +48,3 @@ public class FacilityReportDaoImpl extends BaseDaoImpl implements FacilityReport
         return query.list();
     }
 }
-

@@ -16,6 +16,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserDao  {
+
     public User findUserbyUsernameAndPassword(String username, String password);
+
+
 
 }

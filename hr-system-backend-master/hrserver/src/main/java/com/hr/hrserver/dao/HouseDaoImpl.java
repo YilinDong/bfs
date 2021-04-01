@@ -58,3 +58,4 @@ public class HouseDaoImpl extends BaseDaoImpl implements HouseDao{
     }
 
 }
+

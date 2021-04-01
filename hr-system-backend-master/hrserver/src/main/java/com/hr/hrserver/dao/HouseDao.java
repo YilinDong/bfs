@@ -7,3 +7,4 @@ public interface HouseDao {
     public int getHouseIDWhichNumOfPeopLessThan(int num_of_people);
     public int increaseNumOfPeopleByHouseID(int houseID); //return the new number of people
 }
+

@@ -5,10 +5,10 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.util.CollectionUtils;
 
-public class AddressDaoImpl extends BaseDaoImpl implements AddressDao{
+public class AddressDaoImpl extends BaseDaoImpl {
     public AddressDaoImpl() { super(Address.class); }
 
-    @Override
+
     public Address getAddressByEmployeeID(int eid) {
         Query query = getCurrentSession().createQuery("from Address a where a.ID=:id");
         Transaction tx = getCurrentSession().beginTransaction();
